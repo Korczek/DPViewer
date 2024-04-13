@@ -9,7 +9,7 @@ export const Method1 = () => {
 
             here will be content when i place api on azure. for now there is nothing to display 
 
-            {/* {GetTransport()} */}
+            {GetTransport()}
         </div>
     )
 }

@@ -10,7 +10,7 @@ function App() {
   return (
     <div className=''>
 
-      <NavBar nowPage={nowPage} setNowPage={setNowPage} />
+      <NavBar setNowPage={setNowPage} />
 
       {nowPage == 0 && <Home />}
       {nowPage == 1 && <Method1 />}
