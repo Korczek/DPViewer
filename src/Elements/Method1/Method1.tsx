@@ -7,7 +7,7 @@ export const Method1 = () => {
 
             some content
 
-            here will be content when i place api on azure. for now there is nothing to display 
+            {/* here will be content when i place api on azure. for now there is nothing to display  */}
 
             {GetTransport()}
         </div>
@@ -21,7 +21,7 @@ function GetTransport() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://localhost:7219/Transportation/GetDemoTransport');
+                const response = await fetch('https://korczlearningapi.azurewebsites.net/Transportation/GetDemoTransport');
                 const responseData = await response.json();
                 setData(responseData);
             }
