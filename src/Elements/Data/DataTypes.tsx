@@ -18,3 +18,8 @@ interface Content{
     name: string;
     description: string;
 }
+
+interface LoginData {
+    userName: string;
+    password: string;
+}

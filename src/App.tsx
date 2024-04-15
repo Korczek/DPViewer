@@ -1,22 +1,28 @@
 import { useState } from 'react'
-import './App.css'
 import { NavBar } from './Elements/NavBar/Navbar'
 import { Home } from './Elements/Home/Home'
-import { Method1 } from './Elements/Method1/Method1'
+import { CompanyMgr } from './Elements/Method1/CompanyMgr'
 
 function App() {
   const [nowPage, setNowPage] = useState(0)
 
   return (
-    <div className=''>
+    <div>
 
       <NavBar setNowPage={setNowPage} />
 
-      {nowPage == 0 && <Home />}
-      {nowPage == 1 && <Method1 />}
+      <div >
+        {nowPage == 0 && <Home />}
+        {nowPage == 1 && <CompanyMgr />}
+      </div>
 
     </div>
   )
 }
 
 export default App
+
+
+// className='flex justify-center content-center '
+
+// className='flex flex-full'
