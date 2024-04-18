@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { NavBar } from './Elements/NavBar/Navbar'
-import { Home } from './Elements/Home/Home'
-import { CompanyMgr } from './Elements/Method1/CompanyMgr'
+import { useState } from 'react';
+import { NavBar } from './Elements/NavBar/Navbar';
+import { Home } from './Elements/Home/Home';
+import { CompanyMgr } from './Elements/Method1/CompanyMgr';
 
 function App() {
   const [nowPage, setNowPage] = useState(0)
@@ -19,10 +19,4 @@ function App() {
     </div>
   )
 }
-
 export default App
-
-
-// className='flex justify-center content-center '
-
-// className='flex flex-full'

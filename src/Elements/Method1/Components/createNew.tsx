@@ -45,7 +45,8 @@ export const CreateNewCompany = () => {
     }
 
     return (
-        <div className="fixed w-screen h-screen justify-center content-center">
+        <section id="CreateNew">
+        <div className="fixed w-screen h-screen justify-center content-center" >
             <div className="flex flex-col bg-stone-700">
                 
                 <div className="text-center">
@@ -93,5 +94,6 @@ export const CreateNewCompany = () => {
 
             </div>
         </div>
+        </section>
     )
 }

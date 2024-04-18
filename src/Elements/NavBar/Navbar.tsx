@@ -12,7 +12,6 @@ export const NavBar: React.FC<NavBarProps> = ({ setNowPage }) => {
       {nbHidden ? nbNotVisible(setNbHidden) : nbVisible(setNowPage, setNbHidden)}
     </>
   )
-
 }
 
 function nbNotVisible(setNbHidden: React.Dispatch<React.SetStateAction<boolean>>) {

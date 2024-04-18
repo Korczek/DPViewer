@@ -27,10 +27,12 @@ export const CompanyMgr = () => {
 
 
     return (
+        <section id="CompanyDemo">
         <>
             {!data && raportCode == -1 && <LogIn onLoginReturn={handleLoginReturn} />}
             {data && raportCode == 0 && <CreateNewCompany />}
             {!data && raportCode == 1 && <CreateNewCompany />}
         </>
+        </section>
     )
 }
