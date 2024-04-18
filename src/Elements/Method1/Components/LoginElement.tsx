@@ -1,94 +1,137 @@
-import React, { useEffect, useState } from "react"
-import InputField from "../../DefaultElements/InputField";
+import React, { useState } from "react"
+// import { loadingBar } from "./loadingBar";
+import { verifyLogin } from "./Constants";
 
 interface LoginData {
-    companyData: React.Dispatch<React.SetStateAction<Transportation | null>>;
+    onLoginReturn: (data: Company | null, returnCode: number) => void;
 }
 
-export const LogIn: React.FC<LoginData> = () => {
+export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
 
-    const [loginData, setLoginData] = useState<LoginData | null>(null);
+    const [login, setLogin] = useState("login");
+    const [password, setPassword] = useState("password");
+    const [rc, setRC] = useState(-1);
 
-    useEffect(() => {
-        getLoginPattern()
-            .then(ld => {
-                setLoginData(ld);
-            })
-            .catch(error => {
-                console.error("error", error);
-            });
-    });
 
-    const [login, setLogin] = useState<string>('login');
+    const handleClickLogin = () => {
+        if (login == "login")
+            setLogin("");
+    };
+    const handleClickPassword = () => {
+        if (password == "password")
+            setPassword("");
+    };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleL = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length <= 15) {
             setLogin(event.target.value);
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://localhost:7219/Transportation/GetDemoTransport');
-                //('https://korczlearningapi.azurewebsites.net/Transportation/GetDemoTransport')('https://localhost:7219/Transportation/GetDemoTransport');
-                const responseData = await response.json();
-                setLoginData(responseData);
-            }
-            catch (error) {
-                console.error('fetching data propblem:', error);
-            }
+    const handleP = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value.length <= 25) {
+            setPassword(event.target.value);
+        }
+    };
+
+    interface LoginData {
+        userName: string;
+        password: string;
+    }
+
+    const handleLogIn = () => {
+
+        if(login == "login" && password == "password" || 
+            login == "login" || password == "password"){
+            setRC(3);
+            return;
+        }
+
+        const ld: LoginData = {
+            userName: login,
+            password: password
         };
-        fetchData();
-    }, []);
 
+        verifyLogin(ld)
+            .then((lrd) => {
+                if (lrd == null) {
+                    throw Error("wrong return");
+                }
+                console.log(lrd)
+                if (lrd.returnCode == 0) {
+                    onLoginReturn(lrd.returnContent, lrd.returnCode);
+                }
+                else {
+                    setRC(lrd?.returnCode);
+                }
+            })
+            .catch((error) => {
+                console.error("thats error in login element" + error);
+            });
+    }
 
+    const handleCreateAccount = () => {
+        onLoginReturn(null, 1);
+    }
 
     return (
         <div className="flex w-full h-screen  text-white justify-center content-center">
-            <div className="w-1/2 justify-center text-center border-r-2 border-gray-500 p-12">
+            <div className="w-1/2 flex flex-col justify-center content-center h-full text-center border-r-2 border-stone-500 p-12">
 
-                <h1> Company manager </h1>
+                <div >
+                    <h1> Company manager </h1>
 
-                <div className="pt-6 text-center">
+                    <div className="pt-6 text-center">
 
-                    this app is created in simple structure. based on factory design pattern. There is single class called company, and if company is farm created company is companyFarm : company
-
-                </div>
-
-
-            </div>
-
-            <div className="w-1/2  p-4 border-l-2 border-gray-500">
-
-                // get login file template from server <br />
-                // display login in divs<br />
-                // get data from user<br />
-                // send this data to server when user will press login button
-                <div className="flex flex-col justify-center">
-
-                    <div className="">
-                        <h1 className="text-center font-xl"> Log in to your company </h1>
-                    </div>
-
-                    <div>
-
-                        <input className="text-center rounded-full"
-                            type="text"
-                            id="inputField"
-                            value={login}
-                            onChange={handleChange}
-                            maxLength={15}
-                        />
+                        this app is created in simple structure. based on factory design pattern. There is single class called company, and if company is farm created company is companyFarm : company
 
                     </div>
-
                 </div>
 
             </div>
 
+            <div className="w-1/2  p-4">
+
+                <div className="flex flex-col justify-center content-center h-full">
+
+                    <div className="flex flex-col p-4 justify-center content-center bg-stone-500/50 border-2 border-stone-400 rounded-3xl">
+                        <p className="text-center pb-2 text-2xl">Log in to your company </p>
+                        <div className="p-2 justify-center content-center">
+                            <input className="text-center w-full rounded-xl p-1 border-2 border-stone-400"
+                                type="login"
+                                id="lif"
+                                value={login}
+                                onClick={handleClickLogin}
+                                onChange={handleL}
+                                maxLength={15}
+                            />
+                        </div>
+                        <div className="p-2">
+                            <input className="text-center w-full rounded-xl p-1 border-2 border-stone-400"
+                                type="password"
+                                id="pif"
+                                value={password}
+                                onClick={handleClickPassword}
+                                onChange={handleP}
+                                maxLength={25}
+                            />
+                        </div>
+                        {rc == 0 && (<div className="text-red-400 place-self-center"> Everything is fine </div>)}
+                        {rc == 1 && (<div className="text-red-400 place-self-center"> Wrong password </div>)}
+                        {rc == 2 && (<div className="text-red-400 place-self-center"> There is no company with that username </div>)}
+                        {rc == 3 && (<div className="text-red-400 place-self-center"> You need to provide login and password first </div>)}
+                        <div className="p-2">
+                            <button className="text-center w-full bg-stone-500/50 hover:bg-stone-500/75 rounded-xl p-1 border-2 border-stone-400"
+                                onClick={handleLogIn}>log In</button>
+                        </div>
+                        <p className="place-self-center"> If you don't have account you can create new
+                            <button className="text-sky-400 hover:text-sky-600 p-0 bg-inherit px-1" onClick={handleCreateAccount}> here.</button>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     )
 }
-
-function fetchCompany 
