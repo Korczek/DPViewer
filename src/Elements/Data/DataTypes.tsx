@@ -27,12 +27,11 @@ interface Content{
 }
 
 interface LoginData {
-    userName: string;
-    password: string;
+    Login: string;
+    Password: string;
 }
 
 interface LoginReturnData {
     returnCode: number;
-    returnID: number;
-    returnContent: Company;
+    UserID: string;
 }

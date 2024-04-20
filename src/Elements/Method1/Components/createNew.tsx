@@ -1,5 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from "react"
-import { getCompanyData } from "./Constants"
+import React, {  useState } from "react" // useDebugValue, useEffect,
 
 export const CreateNewCompany = () => {
 
@@ -42,6 +41,7 @@ export const CreateNewCompany = () => {
         // push data to server and wait for return 
         // if return will be positive hide this window and open company screen 
         // where will be place to select company and to add company 
+
     }
 
     return (

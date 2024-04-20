@@ -3,22 +3,22 @@ import React, { useState } from "react"
 import { verifyLogin } from "./Constants";
 
 interface LoginData {
-    onLoginReturn: (data: Company | null, returnCode: number) => void;
+    onLoginReturn: (returnCode: number, userID: string) => void;
 }
 
 export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
 
-    const [login, setLogin] = useState("login");
-    const [password, setPassword] = useState("password");
+    const [log, setLogin] = useState<string>("login");
+    const [pass, setPassword] = useState<string>("password");
     const [rc, setRC] = useState(-1);
 
 
     const handleClickLogin = () => {
-        if (login == "login")
+        if (log == "login")
             setLogin("");
     };
     const handleClickPassword = () => {
-        if (password == "password")
+        if (pass == "password")
             setPassword("");
     };
 
@@ -35,21 +35,21 @@ export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
     };
 
     interface LoginData {
-        userName: string;
-        password: string;
+        Login: string;
+        Password: string;
     }
 
     const handleLogIn = () => {
 
-        if(login == "login" && password == "password" || 
-            login == "login" || password == "password"){
+        if(log == "login" && pass == "password" || 
+            log == "login" || pass == "password"){
             setRC(3);
             return;
         }
 
         const ld: LoginData = {
-            userName: login,
-            password: password
+            Login: log,
+            Password: pass
         };
 
         verifyLogin(ld)
@@ -59,7 +59,8 @@ export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
                 }
                 console.log(lrd)
                 if (lrd.returnCode == 0) {
-                    onLoginReturn(lrd.returnContent, lrd.returnCode);
+                    console.log(lrd.UserID);
+                    onLoginReturn(lrd.returnCode, lrd.UserID);
                 }
                 else {
                     setRC(lrd?.returnCode);
@@ -71,7 +72,7 @@ export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
     }
 
     const handleCreateAccount = () => {
-        onLoginReturn(null, 1);
+        onLoginReturn(1, "-1");
     }
 
     return (
@@ -100,7 +101,7 @@ export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
                             <input className="text-center w-full rounded-xl p-1 border-2 border-stone-400"
                                 type="login"
                                 id="lif"
-                                value={login}
+                                value={log}
                                 onClick={handleClickLogin}
                                 onChange={handleL}
                                 maxLength={15}
@@ -110,7 +111,7 @@ export const LogIn: React.FC<LoginData> = ({ onLoginReturn }) => {
                             <input className="text-center w-full rounded-xl p-1 border-2 border-stone-400"
                                 type="password"
                                 id="pif"
-                                value={password}
+                                value={pass}
                                 onClick={handleClickPassword}
                                 onChange={handleP}
                                 maxLength={25}
