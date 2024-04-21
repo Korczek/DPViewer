@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 // import { loadingBar } from "./loadingBar";
-import { verifyLogin } from "./Constants";
+import { verifyLogin } from "./Communication";
 
 interface LoginData {
     onLoginReturn: (returnCode: number, userID: string) => void;
